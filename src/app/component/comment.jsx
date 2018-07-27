@@ -41,15 +41,29 @@ class Comment extends React.Component {
           </div>);
     }
     else if (!this.state.editing) {
-      return (
-          <div className='media text-muted pt-3 border-bottom border-gray'>
-            <p className='media-body pb-3 mb-0 small lh-125'>{this.props.content.text}</p>
-            <div>
-              <button type="button" className="btn btn-secondary" onClick={this.edit.bind(this)}>Edit</button>
-              <button type="button" className="btn btn-danger" onClick={this.remove.bind(this)}>Remove</button>
-            </div>
-          </div>);
+      if(this.props.loggedInUser) {
+        return (
+            <div className='media text-muted pt-3 border-bottom border-gray'>
+              <p className='media-body pb-3 mb-0 small lh-125'>{this.props.content.text}</p>
+              <div>
+                <button type="button" className="btn btn-secondary" onClick={this.edit.bind(this)}>Edit</button>
+                <button type="button" className="btn btn-danger" onClick={this.remove.bind(this)}>Remove</button>
+              </div>
+            </div>);
+      }
+      else {
+        return (
+            <div className='media text-muted pt-3 border-bottom border-gray'>
+              <p className='media-body pb-3 mb-0 small lh-125'>{this.props.content.text}</p>
+            </div>);
+      }
     }
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    loggedInUser: state.loggedInUser
   }
 }
 
@@ -60,7 +74,5 @@ function matchDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(() => {
-  return {}
-}, matchDispatchToProps)(Comment);
+export default connect(mapStateToProps, matchDispatchToProps)(Comment);
 

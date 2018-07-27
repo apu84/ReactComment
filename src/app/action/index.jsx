@@ -22,3 +22,32 @@ export const addComment = () => {
     type: 'ADD_COMMENT'
   };
 };
+
+export const addUser = (name, password) => {
+  return {
+    type: 'ADD_USER',
+    payload: {
+      name: name,
+      password: password
+    }
+  }
+};
+
+export const login = (name, password) => {
+  return {
+    type: 'LOGIN_USER',
+    payload: {
+      name: name,
+      password: password
+    }
+  }
+};
+
+export const logout = (name) => {
+  return {
+    type: 'LOGOUT_USER',
+    payload: {
+      name: name
+    }
+  }
+};

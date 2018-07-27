@@ -1,5 +1,4 @@
-const commentsArray = [];
-export default function (state = null, action) {
+export default function (state = [], action) {
   switch (action.type) {
     case "EDIT_COMMENT":
       return editComment(state, action.payload.text, action.payload.index);
@@ -8,7 +7,7 @@ export default function (state = null, action) {
     case "ADD_COMMENT":
       return addComment(state);
     default:
-      return state == null ? commentsArray: state;
+      return state;
   }
 }
 
