@@ -1,7 +1,8 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {addUser, login, logout} from '../action/index'
+import {addUser} from '../action/index'
+import LoginForm from "./loginForm";
 
 class UserHome extends React.Component {
   constructor(props) {
@@ -11,38 +12,8 @@ class UserHome extends React.Component {
     };
   }
 
-  showLoginForm() {
-    this.setState({
-      showLoginForm: true
-    });
-  }
-
-  login() {
-    this.props.login(this.refs.userName.value, this.refs.password.value);
-    this.setState({
-      showLoginForm: false
-    });
-  }
-
-  logout() {
-    this.props.logout(this.props.loggedInUser.name);
-  }
-
   render() {
-    if (!this.state.showLoginForm && !this.props.loggedInUser) {
-      return (<a href='javascript:void(0)' onClick={this.showLoginForm.bind(this)}>Login</a>);
-    }
-    else if (this.state.showLoginForm) {
-      return (
-          <div className='form-group col-md-6'>
-            <input className='form-control mb-3' ref='userName' type='text'/>
-            <input className='form-control mb-3' ref='password' type='password'/>
-            <button className='btn btn-primary' onClick={this.login.bind(this)}>Login</button>
-          </div>);
-    }
-    else if(this.props.loggedInUser) {
-      return (<div><span className='badge badge-info'>Logged in as: {this.props.loggedInUser.name}</span> <a href='javascript:void(0)' onClick={this.logout.bind(this)}>Logout</a></div>)
-    }
+    return (<LoginForm/>)
   }
 }
 
@@ -54,9 +25,7 @@ function mapStateToProps(state) {
 
 function matchDispatchToProps(dispatch) {
   return bindActionCreators({
-    addUser: addUser,
-    login: login,
-    logout: logout
+    addUser: addUser
   }, dispatch);
 }
 
