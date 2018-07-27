@@ -41,7 +41,7 @@ class Comment extends React.Component {
           </div>);
     }
     else if (!this.state.editing) {
-      if(this.props.loggedInUser) {
+      if (this.props.loggedInUser && Object.keys(this.props.loggedInUser).length > 0) {
         return (
             <div className='media text-muted pt-3 border-bottom border-gray'>
               <p className='media-body pb-3 mb-0 small lh-125'>{this.props.content.text}</p>

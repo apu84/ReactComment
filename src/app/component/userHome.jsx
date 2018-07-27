@@ -2,7 +2,8 @@ import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {addUser} from '../action/index'
-import LoginForm from "./loginForm";
+import LoginForm from './loginForm';
+import RegistrationForm from './registrationForm';
 
 class UserHome extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class UserHome extends React.Component {
   }
 
   render() {
-    return (<LoginForm/>)
+    return (<div><LoginForm/> <RegistrationForm /></div>)
   }
 }
 

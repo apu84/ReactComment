@@ -10,10 +10,18 @@ export default function (state = null, action) {
 }
 
 function loginUser(payload) {
-  return {
-    name: payload.name,
-    password: payload.password
+  if(payload.users) {
+   for(let i=0; i < payload.users.length; i++) {
+     if (payload.name === payload.users[i].name
+         && payload.password === payload.users[i].password) {
+       return {
+         name: payload.users[i].name,
+         password: payload.users[i].password
+       }
+     }
+   }
   }
+  return {};
 }
 
 function logoutUser(state, payload) {

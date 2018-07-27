@@ -33,12 +33,13 @@ export const addUser = (name, password) => {
   }
 };
 
-export const login = (name, password) => {
+export const login = (name, password, users) => {
   return {
     type: 'LOGIN_USER',
     payload: {
       name: name,
-      password: password
+      password: password,
+      users: users
     }
   }
 };

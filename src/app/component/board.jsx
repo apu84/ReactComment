@@ -15,7 +15,7 @@ class Board extends React.Component {
   }
 
   render() {
-    if (this.props.loggedInUser) {
+    if (this.props.loggedInUser && Object.keys(this.props.loggedInUser).length > 0) {
       return (
           <div className='my-3 p-3 bg-white rounded box-shadow'>
             <UserHome/>

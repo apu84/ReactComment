@@ -28,7 +28,7 @@ class LoginForm extends React.Component {
   }
 
   login() {
-    this.props.login(this.refs.userName.value, this.refs.password.value);
+    this.props.login(this.refs.userName.value, this.refs.password.value, this.props.users);
     this.setState({
       showLoginForm: false
     });
@@ -48,15 +48,28 @@ class LoginForm extends React.Component {
           </div>)
     }
     else if (this.props.loggedInUser) {
-      return (<div><span className='badge badge-info'>Logged in as: {this.props.loggedInUser.name}</span> <a
-          href='javascript:void(0)' onClick={this.logout.bind(this)}>Logout</a></div>)
+      if(Object.keys(this.props.loggedInUser).length === 0) {
+        return (
+            <div className='form-group col-md-6'>
+              <input className='form-control mb-3' ref='userName' type='text'/>
+              <input className='form-control mb-3' ref='password' type='password'/>
+              <button className='btn btn-primary' onClick={this.login.bind(this)}>Login</button>
+              <button className='btn btn-secondary' onClick={this.cancel.bind(this)}>Cancel</button>
+              <span className='badge badge-danger'>Invalid username or password</span>
+            </div>)
+      }
+      else {
+        return (<div><span className='badge badge-info'>Logged in as: {this.props.loggedInUser.name}</span> <a
+            href='javascript:void(0)' onClick={this.logout.bind(this)}>Logout</a></div>)
+      }
     }
   }
 }
 
 function mapStateToProps(state) {
   return {
-    loggedInUser: state.loggedInUser
+    loggedInUser: state.loggedInUser,
+    users: state.users
   }
 }
 
