@@ -5,7 +5,7 @@ const port = process.env.PORT || 8000;
 
 module.exports = {
   context: __dirname,
-  entry: ['./src/app/app.jsx', './src/style/style.css'],
+  entry: ['./src/app/index.jsx', './src/style/style.css'],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',

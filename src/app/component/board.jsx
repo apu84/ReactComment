@@ -3,7 +3,6 @@ import Comment from './comment'
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 import {addComment} from "../action";
-import UserHome from './userHome';
 
 class Board extends React.Component {
   constructor(props) {
@@ -18,7 +17,6 @@ class Board extends React.Component {
     if (this.props.loggedInUser && Object.keys(this.props.loggedInUser).length > 0) {
       return (
           <div className='my-3 p-3 bg-white rounded box-shadow'>
-            <UserHome/>
             <div className='border-bottom border-gray'>
               <h6 className='pb-2 mb-0'>Recent comments</h6>
               <button className='btn btn-primary' onClick={this.add.bind(this)}>Add comment</button>
@@ -33,7 +31,6 @@ class Board extends React.Component {
     else {
       return (
           <div className='my-3 p-3 bg-white rounded box-shadow'>
-            <UserHome/>
             <div className='border-bottom border-gray'>
               <h6 className='pb-2 mb-0'>Recent comments</h6>
             </div>

@@ -1,13 +1,29 @@
 import React from 'react'
-import ReactDOM from 'react-dom';
+import {Route, Router} from 'react-router-dom';
 import Board from './component/board';
-import {Provider} from 'react-redux';
-import {createStore} from 'redux';
-import allReducers from './reducers/index'
+import LoginForm from './component/loginForm'
+import RegistrationForm from './component/registrationForm';
+import ProfileLinks from './component/profileLinks'
+import {history} from './helpers/index'
 
-const store = createStore(allReducers);
+export default class App extends React.Component {
+  render() {
+    return (
+        <div>
+          <Router history={history}>
+            <div>
+              <Route exact path='/' component={ProfileLinks}/>
+              <Route path='/login' component={LoginForm}/>
+              <Route path='/registration' component={RegistrationForm}/>
+              <Board/>
+            </div>
+          </Router>
 
-ReactDOM.render(<Provider store={store}><Board/></Provider>,
-    document.getElementById('root'));
+        </div>
+    );
+  }
+}
+
+
 
 

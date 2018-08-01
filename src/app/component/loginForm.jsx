@@ -2,6 +2,7 @@ import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {login, logout} from '../action/index'
+import {Link} from 'react-router-dom';
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -35,33 +36,16 @@ class LoginForm extends React.Component {
   }
 
   render() {
-    if (!this.state.showLoginForm && !this.props.loggedInUser) {
-      return (<a href='javascript:void(0)' onClick={this.showLoginForm.bind(this)}>Login</a>);
-    }
-    else if (this.state.showLoginForm) {
+    if (!this.props.loggedInUser) {
       return (
           <div className='form-group col-md-6'>
             <input className='form-control mb-3' ref='userName' type='text'/>
             <input className='form-control mb-3' ref='password' type='password'/>
-            <button className='btn btn-primary' onClick={this.login.bind(this)}>Login</button>
-            <button className='btn btn-secondary' onClick={this.cancel.bind(this)}>Cancel</button>
+            <button type='button' className='btn btn-primary' onClick={this.login.bind(this)}>Login</button>
+            <Link className='btn btn-secondary ml-1' to='/'>Cancel</Link>
           </div>)
-    }
-    else if (this.props.loggedInUser) {
-      if(Object.keys(this.props.loggedInUser).length === 0) {
-        return (
-            <div className='form-group col-md-6'>
-              <input className='form-control mb-3' ref='userName' type='text'/>
-              <input className='form-control mb-3' ref='password' type='password'/>
-              <button className='btn btn-primary' onClick={this.login.bind(this)}>Login</button>
-              <button className='btn btn-secondary' onClick={this.cancel.bind(this)}>Cancel</button>
-              <span className='badge badge-danger'>Invalid username or password</span>
-            </div>)
-      }
-      else {
-        return (<div><span className='badge badge-info'>Logged in as: {this.props.loggedInUser.name}</span> <a
-            href='javascript:void(0)' onClick={this.logout.bind(this)}>Logout</a></div>)
-      }
+    }else {
+      return (<div></div>);
     }
   }
 }

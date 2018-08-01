@@ -28,23 +28,27 @@ class Comment extends React.Component {
     this.props.removeComment(this.props.index);
   }
 
+  isLoggedIn() {
+    return this.props.loggedInUser && Object.keys(this.props.loggedInUser).length > 0;
+  }
+
   render() {
-    if (this.state.editing || this.props.content.text === '') {
+    if ((this.state.editing || this.props.content.text === '') && this.isLoggedIn()) {
       return (
-          <div className='media text-muted pt-3 border-bottom border-gray'>
+          <div className='text-muted pt-3 border-bottom border-gray'>
             <div className='form-row'>
               <div className='col-md-12'>
-                <textarea ref='newText' className='form-control' defaultValue={this.props.content.text}></textarea>
+                <textarea ref='newText' className='form-control mb-3' defaultValue={this.props.content.text}></textarea>
               </div>
             </div>
             <button type="button" className="btn btn-success" onClick={this.save.bind(this)}>Save</button>
           </div>);
     }
     else if (!this.state.editing) {
-      if (this.props.loggedInUser && Object.keys(this.props.loggedInUser).length > 0) {
+      if (this.isLoggedIn()) {
         return (
-            <div className='media text-muted pt-3 border-bottom border-gray'>
-              <p className='media-body pb-3 mb-0 small lh-125'>{this.props.content.text}</p>
+            <div className='text-muted pt-3 border-bottom border-gray'>
+              <p className='pb-3 mb-0 small lh-125'>{this.props.content.text}</p>
               <div>
                 <button type="button" className="btn btn-secondary" onClick={this.edit.bind(this)}>Edit</button>
                 <button type="button" className="btn btn-danger" onClick={this.remove.bind(this)}>Remove</button>

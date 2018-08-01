@@ -2,6 +2,7 @@ import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {addUser} from '../action/index'
+import {Link} from 'react-router-dom';
 
 class RegistrationForm extends React.Component {
   constructor(props) {
@@ -31,20 +32,17 @@ class RegistrationForm extends React.Component {
   }
 
   render() {
-    if (!this.state.showRegistrationForm && !this.props.loggedInUser) {
-      return (<a href='javascript:void(0)' onClick={this.showRegistrationForm.bind(this)}>Register</a>);
-    }
-    else if (this.state.showRegistrationForm) {
+    if (!this.props.loggedInUser) {
       return (
           <div className='form-group col-md-6'>
             <input className='form-control mb-3' ref='userName' type='text'/>
             <input className='form-control mb-3' ref='password' type='password'/>
             <button className='btn btn-primary' onClick={this.addUser.bind(this)}>Register</button>
-            <button className='btn btn-secondary' onClick={this.cancel.bind(this)}>Cancel</button>
+            <Link className='btn btn-secondary ml-1' to='/'>Cancel</Link>
           </div>)
     }
     else if (this.props.loggedInUser) {
-      return(<div></div>);
+      return (<div></div>);
     }
   }
 }
