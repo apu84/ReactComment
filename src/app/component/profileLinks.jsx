@@ -4,11 +4,11 @@ import {connect} from 'react-redux';
 
 class ProfileLinks extends React.Component {
   render() {
-    if (!this.props.loggedInUser) {
+    if (!this.props.notifications) {
       return (
-          <div>
+          <div className='p-3'>
             <Link to='/login'>Login</Link>
-            <Link to='/registration' className='ml-1'>Registration</Link>
+            <Link to='/registration' className='ml-2'>Registration</Link>
           </div>);
     }
   }
@@ -16,7 +16,7 @@ class ProfileLinks extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    loggedInUser: state.loggedInUser,
+    loggedInUser: state.loggedInUser
   }
 }
 

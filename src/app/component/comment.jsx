@@ -29,7 +29,7 @@ class Comment extends React.Component {
   }
 
   isLoggedIn() {
-    return this.props.loggedInUser && Object.keys(this.props.loggedInUser).length > 0;
+    return this.props.loggedInUser;
   }
 
   render() {

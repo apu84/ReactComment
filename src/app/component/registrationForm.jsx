@@ -1,62 +1,71 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {addUser} from '../action/index'
-import {Link} from 'react-router-dom';
+import {addUser, registrationError, resetNotifications} from '../action/index'
+import {withRouter} from 'react-router-dom'
 
 class RegistrationForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      showRegistrationForm: false
-    };
   }
 
-  showRegistrationForm() {
-    this.setState({
-      showRegistrationForm: true
-    });
+  login() {
+    this.props.resetNotifications();
+    this.props.history.push('/login');
   }
 
   cancel() {
-    this.setState({
-      showRegistrationForm: false
-    });
+    this.props.resetNotifications();
+    this.props.history.push('/');
   }
 
   addUser() {
-    this.props.addUser(this.refs.userName.value, this.refs.password.value);
-    this.setState({
-      showRegistrationForm: false
-    });
+    if (this.refs.userName.value === '') {
+      this.props.registrationError('User name can not be empty');
+    }
+    else if (this.refs.password.value === '') {
+      this.props.registrationError('Password can not be empty');
+    }
+    else {
+      this.props.addUser(this.refs.userName.value, this.refs.password.value);
+    }
   }
 
   render() {
     if (!this.props.loggedInUser) {
-      return (
-          <div className='form-group col-md-6'>
-            <input className='form-control mb-3' ref='userName' type='text'/>
-            <input className='form-control mb-3' ref='password' type='password'/>
-            <button className='btn btn-primary' onClick={this.addUser.bind(this)}>Register</button>
-            <Link className='btn btn-secondary ml-1' to='/'>Cancel</Link>
-          </div>)
+      if(!this.props.notifications
+          || (this.props.notifications.type === 'registration' && !this.props.notifications.success)) {
+        return (
+            <div className='form-group col-md-6'>
+              <input className='form-control mb-3' ref='userName' type='text'/>
+              <input className='form-control mb-3' ref='password' type='password'/>
+              <button className='btn btn-primary' onClick={this.addUser.bind(this)}>Register</button>
+              <button className='btn btn-secondary ml-1' to='/' onClick={this.cancel.bind(this)}>Cancel</button>
+            </div>);
+      }
+      else {
+        return (<div className='p-3'><button className='btn btn-primary ml-1' onClick={this.login.bind(this)}>Login</button></div>);
+      }
     }
     else if (this.props.loggedInUser) {
-      return (<div></div>);
+      return (null);
     }
   }
 }
 
 function mapStateToProps(state) {
   return {
-    loggedInUser: state.loggedInUser
+    loggedInUser: state.loggedInUser,
+    notifications: state.notifications
   }
 }
 
 function matchDispatchToProps(dispatch) {
   return bindActionCreators({
-    addUser: addUser
+    addUser: addUser,
+    resetNotifications: resetNotifications,
+    registrationError: registrationError
   }, dispatch);
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(RegistrationForm);
+export default connect(mapStateToProps, matchDispatchToProps)(withRouter(RegistrationForm));

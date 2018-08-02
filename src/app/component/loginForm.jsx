@@ -1,8 +1,7 @@
 import React from 'react';
-import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {login, logout} from '../action/index'
-import {Link} from 'react-router-dom';
+import {login, resetNotifications} from '../action/index'
+import {withRouter} from 'react-router-dom'
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -23,16 +22,14 @@ class LoginForm extends React.Component {
   }
 
   cancel() {
-    this.setState({
-      showLoginForm: false
-    });
+    const {dispatch} = this.props;
+    dispatch(resetNotifications());
+    this.props.history.push('/');
   }
 
   login() {
-    this.props.login(this.refs.userName.value, this.refs.password.value, this.props.users);
-    this.setState({
-      showLoginForm: false
-    });
+    const {dispatch} = this.props;
+    dispatch(login(this.refs.userName.value, this.refs.password.value));
   }
 
   render() {
@@ -42,10 +39,11 @@ class LoginForm extends React.Component {
             <input className='form-control mb-3' ref='userName' type='text'/>
             <input className='form-control mb-3' ref='password' type='password'/>
             <button type='button' className='btn btn-primary' onClick={this.login.bind(this)}>Login</button>
-            <Link className='btn btn-secondary ml-1' to='/'>Cancel</Link>
+            <button className='btn btn-secondary ml-1' onClick={this.cancel.bind(this)}>Cancel</button>
           </div>)
-    }else {
-      return (<div></div>);
+    }
+    else {
+      return (null);
     }
   }
 }
@@ -53,15 +51,8 @@ class LoginForm extends React.Component {
 function mapStateToProps(state) {
   return {
     loggedInUser: state.loggedInUser,
-    users: state.users
+    users: state.users,
   }
 }
 
-function matchDispatchToProps(dispatch) {
-  return bindActionCreators({
-    login: login,
-    logout: logout
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, matchDispatchToProps)(LoginForm);
+export default connect(mapStateToProps)(withRouter(LoginForm));
