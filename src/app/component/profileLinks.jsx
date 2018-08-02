@@ -4,12 +4,15 @@ import {connect} from 'react-redux';
 
 class ProfileLinks extends React.Component {
   render() {
-    if (!this.props.notifications) {
+    if (!this.props.loggedInUser) {
       return (
           <div className='p-3'>
             <Link to='/login'>Login</Link>
             <Link to='/registration' className='ml-2'>Registration</Link>
           </div>);
+    }
+    else {
+      return (null);
     }
   }
 }

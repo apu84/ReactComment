@@ -30,6 +30,7 @@ class LoginForm extends React.Component {
   login() {
     const {dispatch} = this.props;
     dispatch(login(this.refs.userName.value, this.refs.password.value));
+    this.props.history.push('/');
   }
 
   render() {

@@ -1,7 +1,7 @@
 export default function (state = [], action) {
   switch (action.type) {
-    case "EDIT_COMMENT":
-      return editComment(state, action.payload.text, action.payload.index);
+    case "GETALL_COMMENTS_SUCCESS":
+      return [...action.payload.comments];
     case "REMOVE_COMMENT":
       return removeComment(state, action.payload.index);
     case "ADD_COMMENT":

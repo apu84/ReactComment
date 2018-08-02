@@ -1,28 +1,39 @@
 import {userService} from '../service/users'
+import {commentService} from "../service/comments";
 
-export const editComment = (text, index) => {
-  return {
-    type: 'EDIT_COMMENT',
-    payload: {
-      index: index,
-      text: text
+export const getAllComments = () => {
+    return dispatch => {
+      commentService.getAllComments().then((comments) => {
+        return dispatch(getAllCommentsSuccess(comments));
+      });
     }
-  };
 };
 
-export const removeComment = (index) => {
+export const getAllCommentsSuccess = (comments) => {
   return {
-    type: 'REMOVE_COMMENT',
+    type: 'GETALL_COMMENTS_SUCCESS',
     payload: {
-      index: index
+      comments: comments
     }
-  };
+  }
 };
 
-export const addComment = () => {
-  return {
-    type: 'ADD_COMMENT'
-  };
+export const editComment = (user, commentText, index) => {
+  return dispatch => {
+    commentService.saveComment(user, commentText, index)
+        .then((comments) => {
+          return dispatch(getAllCommentsSuccess(comments))
+        });
+  }
+};
+
+export const removeComment = (user, index) => {
+  return dispatch => {
+    commentService.removeComment(user, index)
+        .then((comments) => {
+          return dispatch(getAllCommentsSuccess(comments))
+        });
+  }
 };
 
 export const resetNotifications = () => {

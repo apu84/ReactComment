@@ -18,7 +18,7 @@ class Comment extends React.Component {
   }
 
   save() {
-    this.props.editComment(this.refs.newText.value, this.props.index);
+    this.props.editComment(this.props.loggedInUser, this.refs.newText.value, this.props.index);
     this.setState({
       editing: false
     });
@@ -45,20 +45,22 @@ class Comment extends React.Component {
           </div>);
     }
     else if (!this.state.editing) {
-      if (this.isLoggedIn()) {
+      if (this.isLoggedIn() && this.props.content.user.id === this.props.loggedInUser.id) {
         return (
             <div className='text-muted pt-3 border-bottom border-gray'>
               <p className='pb-3 mb-0 small lh-125'>{this.props.content.text}</p>
+              <p className='badge badge-pill badge-info'>{this.props.content.user.username}</p>
               <div>
                 <button type="button" className="btn btn-secondary" onClick={this.edit.bind(this)}>Edit</button>
-                <button type="button" className="btn btn-danger" onClick={this.remove.bind(this)}>Remove</button>
+                <button type="button" className="btn btn-danger ml-1" onClick={this.remove.bind(this)}>Remove</button>
               </div>
             </div>);
       }
       else {
         return (
-            <div className='media text-muted pt-3 border-bottom border-gray'>
-              <p className='media-body pb-3 mb-0 small lh-125'>{this.props.content.text}</p>
+            <div className='text-muted pt-3 border-bottom border-gray'>
+              <p className='pb-3 mb-0 small lh-125'>{this.props.content.text}</p>
+              <p className='badge badge-pill badge-info'>{this.props.content.user.username}</p>
             </div>);
       }
     }

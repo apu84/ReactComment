@@ -1,6 +1,7 @@
 export const userService = {
   login,
-  register
+  register,
+  getUser
 };
 
 const users = JSON.parse(localStorage.getItem('users')) || [];
@@ -20,7 +21,6 @@ function login(userName, password) {
     else {
       reject('User name or password is not correct');
     }
-
   });
 }
 
@@ -42,6 +42,21 @@ function register(userName, password) {
     }
     else {
       reject('User with name "' + userName + '" already exists');
+    }
+  });
+}
+
+function getUser(userId) {
+  return new Promise((resolve, reject) => {
+    let filteredUsers = users.filter(user => {
+      return user.id === userId;
+    });
+
+    if (filteredUsers.length > 0) {
+      resolve(filteredUsers[0]);
+    }
+    else {
+      reject('User with id "' + userId + '" doesn\'t exists');
     }
   });
 }

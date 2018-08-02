@@ -1,20 +1,26 @@
 import React from 'react'
 import Comment from './comment'
 import {connect} from 'react-redux';
-import {bindActionCreators} from "redux";
-import {addComment} from "../action";
+import {editComment, getAllComments} from "../action";
+import loggedInUser from "../reducers/loggedInUser";
 
 class Board extends React.Component {
   constructor(props) {
     super(props);
   }
 
+  componentDidMount() {
+    const {dispatch} = this.props;
+    dispatch(getAllComments());
+  }
+
   add() {
-    this.props.addComment();
+    const {dispatch} = this.props;
+    dispatch(editComment(this.props.loggedInUser));
   }
 
   render() {
-    if (this.props.loggedInUser && Object.keys(this.props.loggedInUser).length > 0) {
+    if (this.props.loggedInUser) {
       return (
           <div className='my-3 p-3 bg-white rounded box-shadow'>
             <div className='border-bottom border-gray'>
@@ -52,10 +58,4 @@ function mapStateToProps(state) {
   }
 }
 
-function matchDispatchToProps(dispatch) {
-  return bindActionCreators({
-    addComment: addComment
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, matchDispatchToProps)(Board);
+export default connect(mapStateToProps)(Board);
