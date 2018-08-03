@@ -1,4 +1,4 @@
-#Sample React + Redux + Webpack app
+# Sample React + Redux + Webpack app
 This is small commenting app, mimicking user registration, login and comment feature. Once logged in user can edit/remove his owen comments. This app is built with React js and Redux, webpack as bundler. This is totally browser based app, doesn't have any backend implemented. I am willing add backend as well. But for now its like this :).
 
 To run this do, first checkout the code, then do
@@ -21,7 +21,7 @@ If you need to create a distribution run,
 $ npm run dist
 ```
 
-##Directory structure
+## Directory structure
 
 ```
 src
