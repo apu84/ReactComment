@@ -49,7 +49,8 @@ class Comment extends React.Component {
         return (
             <div className='text-muted pt-3 border-bottom border-gray'>
               <p className='pb-3 mb-0 small lh-125'>{this.props.content.text}</p>
-              <p className='badge badge-pill badge-info'>{this.props.content.user.username}</p>
+              <span className='badge badge badge-info'>{this.props.content.user.username}</span>
+              <span className='badge badge badge-secondary ml-2'>{this.props.content.timestamp}</span>
               <div>
                 <button type="button" className="btn btn-secondary" onClick={this.edit.bind(this)}>Edit</button>
                 <button type="button" className="btn btn-danger ml-1" onClick={this.remove.bind(this)}>Remove</button>
@@ -60,7 +61,8 @@ class Comment extends React.Component {
         return (
             <div className='text-muted pt-3 border-bottom border-gray'>
               <p className='pb-3 mb-0 small lh-125'>{this.props.content.text}</p>
-              <p className='badge badge-pill badge-info'>{this.props.content.user.username}</p>
+              <span className='badge badge badge-info'>{this.props.content.user.username}</span>
+              <span className='badge badge badge-secondary ml-2'>{this.props.content.timestamp}</span>
             </div>);
       }
     }

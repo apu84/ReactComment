@@ -1,10 +1,13 @@
 export const userService = {
   login,
   register,
-  getUser
+  getUser,
+  getLoggedInUser,
+  logout
 };
 
 const users = JSON.parse(localStorage.getItem('users')) || [];
+const user = JSON.parse(localStorage.getItem('user')) || null;
 
 function login(userName, password) {
   return new Promise((resolve, reject) => {
@@ -13,15 +16,30 @@ function login(userName, password) {
     });
 
     if (filteredUsers.length > 0) {
-      resolve({
-        username: filteredUsers[0].username,
-        id: filteredUsers[0].id
-      })
+      const user = {
+        id: filteredUsers[0].id,
+        username: filteredUsers[0].username
+      };
+      localStorage.setItem('user', JSON.stringify(user));
+      resolve(user);
     }
     else {
       reject('User name or password is not correct');
     }
   });
+}
+
+function logout(userName) {
+  return new Promise((resolve, reject) => {
+    const loggedInUser = localStorage.getItem('user');
+    if (loggedInUser && JSON.parse(loggedInUser).username === userName) {
+      localStorage.removeItem('user');
+      resolve(null);
+    }
+    else {
+      reject('No logged in user named ' + userName + ' found');
+    }
+  })
 }
 
 function register(userName, password) {
@@ -57,6 +75,18 @@ function getUser(userId) {
     }
     else {
       reject('User with id "' + userId + '" doesn\'t exists');
+    }
+  });
+}
+
+function getLoggedInUser() {
+  return new Promise((resolve, reject) => {
+    const loggedInUser = localStorage.getItem('user');
+    if (loggedInUser) {
+      resolve(JSON.parse(loggedInUser));
+    }
+    else {
+      reject('No logged in user found');
     }
   });
 }

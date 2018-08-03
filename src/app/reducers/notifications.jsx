@@ -10,6 +10,8 @@ export default function (state = null, action) {
       return {type: 'registration', success: false, text: action.payload.text};
     case "RESET_NOTIFICATIONS":
       return null;
+    case "NO_LOGGED_IN_USER":
+      return null;
     default:
       return state;
   }

@@ -1,8 +1,7 @@
 import React from 'react'
 import Comment from './comment'
 import {connect} from 'react-redux';
-import {editComment, getAllComments} from "../action";
-import loggedInUser from "../reducers/loggedInUser";
+import {editComment, getAllComments, getLoggedInUser} from "../action";
 
 class Board extends React.Component {
   constructor(props) {
@@ -11,6 +10,7 @@ class Board extends React.Component {
 
   componentDidMount() {
     const {dispatch} = this.props;
+    dispatch(getLoggedInUser());
     dispatch(getAllComments());
   }
 
@@ -47,7 +47,7 @@ class Board extends React.Component {
             })}
           </div>
       );
-    };
+    }
   }
 }
 

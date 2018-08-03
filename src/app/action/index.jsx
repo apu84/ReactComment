@@ -1,6 +1,14 @@
 import {userService} from '../service/users'
 import {commentService} from "../service/comments";
 
+export const getLoggedInUser = () => {
+  return dispatch => {
+    userService.getLoggedInUser()
+        .then((user) => dispatch(loginSuccess(user)))
+        .catch((error) => dispatch(noLoggedInUser()));
+  };
+};
+
 export const getAllComments = () => {
     return dispatch => {
       commentService.getAllComments().then((comments) => {
@@ -58,7 +66,15 @@ export const login = (name, password) => {
   }
 };
 
-export const logout = (name) => {
+export const logout = (userName) => {
+  return dispatch => {
+    userService.logout(userName)
+        .then(() => dispatch(logoutSuccess(userName)))
+        .catch((error) => dispatch(loginError(error)));
+  };
+};
+
+export const logoutSuccess = (name) => {
   return [{
     type: 'LOGOUT_USER',
     payload: {
@@ -97,6 +113,12 @@ export const loginError = (text) => {
     }
   }
 };
+
+export const noLoggedInUser = () => {
+  return {
+    type: 'NO_LOGGED_IN_USER'
+  }
+}
 
 export const registrationSuccess = (user) => {
   return {
