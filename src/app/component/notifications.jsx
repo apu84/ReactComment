@@ -39,7 +39,7 @@ class Notifications extends React.Component {
     return (
         <div className='p-3'>
           <span className='badge badge-info'>
-            Logged in as: {user.username}
+            Logged in as: {user.firstName} {user.lastName}
           </span>
           <a href='javascript:void(0)' className='ml-2' onClick={this.logout.bind(this)}>Logout</a>
         </div>

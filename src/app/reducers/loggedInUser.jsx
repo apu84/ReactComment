@@ -12,6 +12,8 @@ export default function (state = null, action) {
 function setUser(payload) {
   return {
     username: payload.user.username,
+    firstName: payload.user.firstName,
+    lastName: payload.user.lastName,
     id: payload.user.id
   };
 }

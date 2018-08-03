@@ -1,7 +1,7 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {editComment, removeComment} from '../action/index'
+import {editComment, removeComment, getAllComments} from '../action/index'
 
 class Comment extends React.Component {
   constructor(props) {
@@ -15,6 +15,16 @@ class Comment extends React.Component {
     this.setState({
       editing: true
     });
+  }
+
+  cancel() {
+    this.setState({
+      editing: false
+    });
+    if (this.refs.newText.value === '') {
+      this.props.removeComment(this.props.loggedInUser, this.props.index);
+    }
+    this.props.getAllComments();
   }
 
   save() {
@@ -42,6 +52,7 @@ class Comment extends React.Component {
               </div>
             </div>
             <button type="button" className="btn btn-success" onClick={this.save.bind(this)}>Save</button>
+            <button type="button" className="btn btn-dark ml-1" onClick={this.cancel.bind(this)}>Cancel</button>
           </div>);
     }
     else if (!this.state.editing) {
@@ -49,7 +60,7 @@ class Comment extends React.Component {
         return (
             <div className='text-muted pt-3 border-bottom border-gray'>
               <p className='pb-3 mb-0 small lh-125'>{this.props.content.text}</p>
-              <span className='badge badge badge-info'>{this.props.content.user.username}</span>
+              <span className='badge badge badge-info'>{this.props.content.user.firstName} {this.props.content.user.lastName}</span>
               <span className='badge badge badge-secondary ml-2'>{this.props.content.timestamp}</span>
               <div>
                 <button type="button" className="btn btn-secondary" onClick={this.edit.bind(this)}>Edit</button>
@@ -61,7 +72,7 @@ class Comment extends React.Component {
         return (
             <div className='text-muted pt-3 border-bottom border-gray'>
               <p className='pb-3 mb-0 small lh-125'>{this.props.content.text}</p>
-              <span className='badge badge badge-info'>{this.props.content.user.username}</span>
+              <span className='badge badge badge-info'>{this.props.content.user.firstName} {this.props.content.user.lastName}</span>
               <span className='badge badge badge-secondary ml-2'>{this.props.content.timestamp}</span>
             </div>);
       }
@@ -78,7 +89,8 @@ function mapStateToProps(state) {
 function matchDispatchToProps(dispatch) {
   return bindActionCreators({
     editComment: editComment,
-    removeComment: removeComment
+    removeComment: removeComment,
+    getAllComments: getAllComments
   }, dispatch);
 }
 

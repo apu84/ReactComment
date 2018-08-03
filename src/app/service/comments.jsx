@@ -14,7 +14,7 @@ function saveComment(user, commentText, index) {
       user: {
         id: user.id
       },
-      timestamp: new Date()
+      timestamp: (new Date()).toDateString()
     };
     if (typeof index !== "undefined") {
       comments[index] = comment;

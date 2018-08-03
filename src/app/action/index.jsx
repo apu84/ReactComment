@@ -50,9 +50,9 @@ export const resetNotifications = () => {
   }
 };
 
-export const addUser = (name, password) => {
+export const addUser = (firstName, lastName, username, password) => {
   return dispatch => {
-    userService.register(name, password)
+    userService.register(firstName, lastName, username, password)
         .then((user) => dispatch(registrationSuccess(user)))
         .catch((error) => dispatch(registrationError(error)));
   };

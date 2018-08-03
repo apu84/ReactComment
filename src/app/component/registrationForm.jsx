@@ -20,14 +20,27 @@ class RegistrationForm extends React.Component {
   }
 
   addUser() {
+    if (this.refs.firstName.value === '') {
+      this.props.registrationError('First name can not be empty');
+    }
+    else if (this.refs.lastName.value === '') {
+      this.props.registrationError('Last name can not be empty');
+    }
     if (this.refs.userName.value === '') {
       this.props.registrationError('User name can not be empty');
     }
     else if (this.refs.password.value === '') {
       this.props.registrationError('Password can not be empty');
     }
+    else if (this.refs.password.value !== this.refs.retypepassword.value) {
+      this.props.registrationError('Password doesn\'t match');
+    }
     else {
-      this.props.addUser(this.refs.userName.value, this.refs.password.value);
+      this.props.addUser(
+          this.refs.firstName.value,
+          this.refs.lastName.value,
+          this.refs.userName.value,
+          this.refs.password.value);
     }
   }
 
@@ -36,9 +49,12 @@ class RegistrationForm extends React.Component {
       if(!this.props.notifications
           || (this.props.notifications.type === 'registration' && !this.props.notifications.success)) {
         return (
-            <div className='form-group col-md-6'>
-              <input className='form-control mb-3' ref='userName' type='text'/>
-              <input className='form-control mb-3' ref='password' type='password'/>
+            <div className='form-group col-md-4'>
+              <input className='form-control mb-3' ref='firstName' type='text' placeholder='First name'/>
+              <input className='form-control mb-3' ref='lastName' type='text' placeholder='Last name'/>
+              <input className='form-control mb-3' ref='userName' type='text' placeholder='username'/>
+              <input className='form-control mb-3' ref='password' type='password' placeholder='password'/>
+              <input className='form-control mb-3' ref='retypepassword' type='password' placeholder='Retype password'/>
               <button className='btn btn-primary' onClick={this.addUser.bind(this)}>Register</button>
               <button className='btn btn-secondary ml-1' to='/' onClick={this.cancel.bind(this)}>Cancel</button>
             </div>);

@@ -12,13 +12,15 @@ const user = JSON.parse(localStorage.getItem('user')) || null;
 function login(userName, password) {
   return new Promise((resolve, reject) => {
     let filteredUsers = users.filter(user => {
-      return user.username === userName && user.password === password;
+      return user.username === userName && atob(user.password) === password;
     });
 
     if (filteredUsers.length > 0) {
       const user = {
         id: filteredUsers[0].id,
-        username: filteredUsers[0].username
+        username: filteredUsers[0].username,
+        firstName: filteredUsers[0].firstName,
+        lastName: filteredUsers[0].lastName
       };
       localStorage.setItem('user', JSON.stringify(user));
       resolve(user);
@@ -42,7 +44,7 @@ function logout(userName) {
   })
 }
 
-function register(userName, password) {
+function register(firstName, lastName, userName, password) {
   return new Promise((resolve, reject) => {
     let filteredUsers = users.filter(user => {
       return user.username === userName;
@@ -51,8 +53,10 @@ function register(userName, password) {
     if (filteredUsers.length === 0) {
       const user = {
         id: Math.ceil(Math.random() * 10000),
+        firstName: firstName,
+        lastName: lastName,
         username: userName,
-        password: password
+        password: btoa(password)
       };
       users.push(user);
       localStorage.setItem('users', JSON.stringify(users));
@@ -71,7 +75,12 @@ function getUser(userId) {
     });
 
     if (filteredUsers.length > 0) {
-      resolve(filteredUsers[0]);
+      resolve({
+        firstName: filteredUsers[0].firstName,
+        lastName: filteredUsers[0].lastName,
+        username: filteredUsers[0].username,
+        id: filteredUsers[0].id
+      });
     }
     else {
       reject('User with id "' + userId + '" doesn\'t exists');
