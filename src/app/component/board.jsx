@@ -44,7 +44,7 @@ class Board extends React.Component {
             </div>
             {this.props.comments.map((comment, index) => {
               return (<Comment key={index}
-                               index={index}
+                               index={this.props.comments.length - 1 - index}
                                content={comment}/>)
             })}
           </div>
