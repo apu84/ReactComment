@@ -24,12 +24,14 @@ class Board extends React.Component {
       return (
           <div className='my-3 p-3 bg-white rounded box-shadow'>
             <div className='border-bottom border-gray'>
-              <h6 className='pb-2 mb-0'>Recent comments</h6>
-              <button className='btn btn-primary' onClick={this.add.bind(this)}>Add comment</button>
+              <h6 className='pb-2 mb-0 d-inline'>Recent comments</h6>
+               <div className='edit-icons d-inline ml-1'>
+                 <i className='fa fa-plus-circle' onClick={this.add.bind(this)}></i>
+               </div>
             </div>
             {this.props.comments.map((comment, index) => {
               return (<Comment key={index}
-                               index={index}
+                               index={this.props.comments.length - 1 - index}
                                content={comment}/>)
             })}
           </div>);

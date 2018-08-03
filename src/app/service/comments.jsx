@@ -1,4 +1,5 @@
 import {userService} from './users'
+import * as moment from 'moment'
 
 export const commentService = {
   saveComment,
@@ -14,8 +15,9 @@ function saveComment(user, commentText, index) {
       user: {
         id: user.id
       },
-      timestamp: (new Date()).toDateString()
+      timestamp: new Date()
     };
+
     if (typeof index !== "undefined") {
       comments[index] = comment;
     }
@@ -35,6 +37,7 @@ function getAllComments() {
       userService.getUser(comment.user.id).then((user) => {
         comment.user = user;
       });
+      comment.timestamp = moment(comment.timestamp).format('YYYY-MM-DD HH:mm:ss');
     });
     resolve(comments);
   });

@@ -38,10 +38,9 @@ class Notifications extends React.Component {
   loginSuccess(user) {
     return (
         <div className='p-3'>
-          <span className='badge badge-info'>
-            Logged in as: {user.firstName} {user.lastName}
-          </span>
-          <a href='javascript:void(0)' className='ml-2' onClick={this.logout.bind(this)}>Logout</a>
+          <i className='fa fa-user-circle-o'></i>
+          <small className='ml-1 text-muted'>{user.firstName} {user.lastName}</small>
+          <div className='edit-icons float-right' onClick={this.logout.bind(this)}> <i className='fa fa-sign-out' title='Sign out'></i></div>
         </div>
     );
   }
